@@ -365,15 +365,17 @@ void receivepacket() {
             printf("Payload: %s\n", message);
             
             time_t timer;
-            char timeBuffer[26];
+            char timeBuffer[50];
             struct tm* tm_info;
 
             time(&timer);
             tm_info = localtime(&timer);
 
-            strftime(timeBuffer, 26, "%Y-%m-%d_%H:%M:%S.rec", tm_info);
-            
-            FILE *f = fopen(./received/timeBuffer, "w");
+            strftime(timeBuffer, 50, "./received/%Y-%m-%d_%H:%M:%S.rec", tm_info);
+            char recFolder[] = "./received/";
+            char recFileEnding[] = ".rec";
+
+            FILE *f = fopen(timeBuffer, "w");
             if (f == NULL)
             {
                 printf("Error opening file!\n");
