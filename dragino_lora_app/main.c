@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <sys/ioctl.h>
 
@@ -362,6 +363,25 @@ void receivepacket() {
             printf("Length: %i", (int)receivedbytes);
             printf("\n");
             printf("Payload: %s\n", message);
+            
+            time_t timer;
+            char timeBuffer[26];
+            struct tm* tm_info;
+
+            time(&timer);
+            tm_info = localtime(&timer);
+
+            strftime(timeBuffer, 26, "%Y-%m-%d_%H:%M:%S.rec", tm_info);
+            
+            FILE *f = fopen(./received/timeBuffer, "w");
+            if (f == NULL)
+            {
+                printf("Error opening file!\n");
+                exit(1);
+            } else {
+                fprintf(f, message);
+                fclose(f);
+            }
 
         } // received a message
 
