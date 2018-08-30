@@ -172,7 +172,7 @@ int RST   = 0;
 sf_t sf = SF7;
 
 // Set center frequency
-uint32_t  freq = 868100000; // in Mhz! (868.1)
+uint32_t  freq = 868300000; // in Mhz! (868.1)
 
 byte hello[32] = "HELLO";
 
@@ -334,6 +334,8 @@ void receivepacket() {
 
     long int SNR;
     int rssicorr;
+    // Clear message char array
+    memset(&message[0], 0, sizeof(message));
 
     if(digitalRead(dio0) == 1)
     {
